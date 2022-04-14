@@ -24,10 +24,11 @@ def type_check(*types):
     def check_accepts(function):
         assert len(types) == function.__code__.co_argcount,\
             "Number of typed inputs must match the function inputs"
-        def new_function(*args, **kwargs):
+        def assert_func(*args, **kwargs):
             for (a, t) in zip(args, types):
                 assert isinstance(a, t), \
                        "arg %r does not match %s" % (a,t)
             return function(*args, **kwargs)
-        return new_function
+        assert_func.__name__ = function.__name__
+        return assert_func
     return check_accepts
