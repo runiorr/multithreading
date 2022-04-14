@@ -4,20 +4,21 @@ import threading
 from simplejson import JSONDecodeError
 from utils.helper import time_elapsed, type_check, func_info
 
+def create_thread(fun, *args):
+    th = threading.Thread(target=fun, args=(args))
+    th.start()
+
 @time_elapsed
 @func_info
 @type_check(str, str)
 def url_parser(url: str, method: str):
+    # TODO Need to add more methods
     if method == "GET":
         resp = requests.get(url)
         try:
             print(f"Response: {resp.json()}")
         except JSONDecodeError:
             print(f"Response: {resp.text}")
-
-def create_thread(fun, *args):
-    th = threading.Thread(target=fun, args=(args))
-    th.start()
 
 @time_elapsed
 @func_info
