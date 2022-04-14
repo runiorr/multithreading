@@ -8,8 +8,8 @@ from utils.helper import time_elapsed, type_check, func_info
 @func_info
 @type_check(str, str)
 def url_parser(url: str, method: str):
-    resp = requests.get(url)
     if method == "GET":
+        resp = requests.get(url)
         try:
             print(f"Response: {resp.json()}")
         except JSONDecodeError:
