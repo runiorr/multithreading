@@ -1,3 +1,4 @@
+import time
 import requests
 import threading
 from simplejson import JSONDecodeError
@@ -10,18 +11,28 @@ def url_parser(url: str, method: str):
     resp = requests.get(url)
     if method == "GET":
         try:
-            print(f"\nResponse: {resp.json()}")
+            print(f"Response: {resp.json()}")
         except JSONDecodeError:
-            print(f"\nResponse: {resp.text}")
+            print(f"Response: {resp.text}")
 
-@type_check(str)
-def thread_exec(url: str):
-    th = threading.Thread(target=url_parser, args=([url, "GET"]))
+def create_thread(fun, *args):
+    th = threading.Thread(target=fun, args=(args))
     th.start()
+
+@time_elapsed
+@func_info
+@type_check(int)
+def sleep(sleep: int):
+    time.sleep(sleep)
+    print("I'm really tired...")
 
 def main():
     urls = ['https://httpbin.org/headers', 'https://httpbin.org/get']
-    [thread_exec(url) for url in urls]
+    [create_thread(url_parser,url,"GET") for url in urls]
+
+    sleeps = [2,4]
+    [create_thread(sleep,rest) for rest in sleeps]
+
 
 if __name__ == "__main__":
     main()

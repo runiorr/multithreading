@@ -16,7 +16,7 @@ def time_elapsed(original_func):
         result = original_func(*args, **kwargs)
         end = datetime.datetime.now()
         elapsed_time = (end-start).total_seconds()
-        print(f'Time to run: {elapsed_time:.2f} seconds')
+        print(f'Elapsed time: {elapsed_time:.2f} seconds')
         return result
     return get_time
 
