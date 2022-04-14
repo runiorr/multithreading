@@ -1,15 +1,16 @@
 import requests
 import threading
 from simplejson import JSONDecodeError
-from utils.helper import time_thread, type_check
+from utils.helper import time_elapsed, type_check, func_info
 
-@time_thread
+@time_elapsed
+@func_info
 def get_url(url: str):
     resp = requests.get(url)
     try:
-        print(f"Response: {resp.json()}")
+        print(f"\nResponse: {resp.json()}")
     except JSONDecodeError:
-        print(f"Response: {resp.text}")
+        print(f"\nResponse: {resp.text}")
 
 @type_check((str,list))
 def thread_exec(url):
