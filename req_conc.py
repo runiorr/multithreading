@@ -1,5 +1,6 @@
 import requests
 import threading
+from simplejson import JSONDecodeError
 from utils.info import time_thread
 
 @time_thread
@@ -7,7 +8,7 @@ def get_url(url: str):
     resp = requests.get(url)
     try:
         print(f"Response: {resp.json()}")
-    except Exception as err:
+    except JSONDecodeError:
         print(f"Response: {resp.text}")
 
 def thread_exec(url):
